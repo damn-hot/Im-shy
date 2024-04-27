@@ -1,0 +1,23 @@
+pip install efficient_apriori
+
+from efficient_apriori import apriori
+import pandas as pd
+store = pd.read_csv('/content/sample_data/aprori.csv',names=['product'],header=None)
+print(store,"\n")
+
+
+transactions = [x.split(",") for x in store['product']]
+itemsets,rules = apriori(transactions, min_support=0.3, min_confidence=0.6)
+for i in itemsets:
+   split_dicts = [{item: support} for item, support in itemsets[i].items()]
+   for d in split_dicts:
+     itemset_str = ','.join(list(d.keys())[0])
+     support = list(d.values())[0]
+     print("{:<20} {:<15}".format(itemset_str, support))
+
+
+print("\n")
+print( "{:<20} {:<25} {:<15} {:<15} {:<15}".format("Antecedent (lhs)", "Consequent (rhs)", "Support", "Confidence", "Lift"))
+for rule in rules:
+  if  rule.support>=0.3:
+    print("{:<20} ==> {:<20} {:<15.4f} {:<15.4f} {:<10.4f}".format(str(rule.lhs), str(rule.rhs), rule.support, rule.confidence, rule.lift))
