@@ -5,6 +5,7 @@ with open("/content/sample_data/play Tennis.csv") as f:
     s=data[1][:-1]
     g=[['?' for i in range(len(s))] for j in range(len(s))]
 
+
 for i in data:
         if i[-1]=="yes":
             for j in range(len(s)):
@@ -20,6 +21,7 @@ for i in data:
         print("\nSteps of Candidate Elimination Algorithm",data.index(i)+1)
         print(s)
         print(g)
+
 gh=[]
 for i in g:
   for j in i:
