@@ -1,0 +1,16 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("/content/sample_data/id3.csv")
+X = pd.get_dummies(df[['Outlook', 'Temperature', 'Humidity', 'Wind']])
+y = df['Play']
+clf = DecisionTreeClassifier().fit(X, y)
+
+plt.figure(figsize=(20,10))
+plot_tree(clf, feature_names=list(X.columns), class_names=clf.classes_, filled=True)
+plt.show()
+
+sample = pd.DataFrame({'Outlook': ['sunny'], 'Temperature': ['cool'],'Humidity': ['high'], 'Wind': ['weak']})
+sample_encoded = pd.get_dummies(sample.reindex(columns=X.columns, fill_value=0))
+print("Prediction for sample:", clf.predict(sample_encoded))
